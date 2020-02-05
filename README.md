@@ -1,2 +1,8 @@
 # 2020_Capstone_origionalFile
-here update the original file of my Capstone Project in 2020 Spring
+#### Creating Day: 02/04/2020
+
+## Unity Version: 2019.1.14f1
+## Added Modules:
+* Android Build Support
+* Vuforia Augmented Reality Support
+* Lumin OS (Magic Leap) Build Support
