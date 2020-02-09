@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &40278296898770049
+--- !u!1 &8575764462433818607
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 40278296898770063}
-  - component: {fileID: 40278296898770048}
+  - component: {fileID: 1523469741738218495}
+  - component: {fileID: 6977104859219878461}
   m_Layer: 0
-  m_Name: interactableController
+  m_Name: InputController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &40278296898770063
+--- !u!4 &1523469741738218495
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40278296898770049}
+  m_GameObject: {fileID: 8575764462433818607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.0575466, y: -0.4077282, z: 2.1456013}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &40278296898770048
+--- !u!114 &6977104859219878461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40278296898770049}
+  m_GameObject: {fileID: 8575764462433818607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d86d07954e932a47ab28385fb6d801f, type: 3}
+  m_Script: {fileID: 11500000, guid: 44a1aee0b34025e4d8b93ab57844bd85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pointer: {fileID: 0}
-  cube1: {fileID: 0}
-  cube2: {fileID: 0}
-  cube3: {fileID: 0}
-  audioSource_hover: {fileID: 0}
+  LeftAnchor: {fileID: 0}
+  RightAnchor: {fileID: 0}
+  HeadAnchor: {fileID: 0}

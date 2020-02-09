@@ -19,7 +19,7 @@ public class MainMenuObjectEffects : MonoBehaviour
     {
         Pointer.OnPointerUpdateForObject += UpdateCube;
         Pointer.OnPointerUpdateForObject += UpdateSound_hover;
-        //Pointer.OnPointerUpdate += LoadScenes;
+        
     }
 
     private void OnDestroy()
@@ -40,8 +40,6 @@ public class MainMenuObjectEffects : MonoBehaviour
         Transform cubeTransform = Pointer.UpdatePointerStatus().GetComponent<Transform>();
         return cubeTransform;
     }
-
-
 
     //change the scale of MainMenu Interactable Object
     private void UpdateCube(GameObject hitObject)
