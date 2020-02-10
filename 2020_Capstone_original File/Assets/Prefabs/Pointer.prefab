@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3063914328092645731}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -48,10 +48,13 @@ MonoBehaviour:
   LineRenderer: {fileID: 8097201390852139164}
   EverythingMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   InteractableMask:
     serializedVersion: 2
     m_Bits: 256
+  TargetMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &5711774238124373528
 GameObject:
   m_ObjectHideFlags: 0
