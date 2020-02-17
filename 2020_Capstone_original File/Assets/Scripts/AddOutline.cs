@@ -8,27 +8,59 @@ public class AddOutline : MonoBehaviour
 
     private Outline outline;
     private Color setColor1 = new Vector4(0, 0.95f, 0.9f, 1);
+    private Color setColor2 = new Vector4(1, 0, 0, 1);
+    private bool outlineShow = false;
+    private bool colorChange = false;
 
-    private void Awake()
+    void Start()
     {
-        PointerEvents.OnPointerUpdateForObject += SetOutline;
+        outline = OutlinedCube.GetComponent<Outline>();
+        outline.OutlineMode = Outline.Mode.OutlineHidden;
+        outline.OutlineColor = setColor1;
+        outline.OutlineWidth = 10.0f;
     }
 
-    private void OnDestroy()
+    void Update()
     {
-        PointerEvents.OnPointerUpdateForObject -= SetOutline;
+        CheckKey();
+        ChangeOutline();
+        ChangeColor();
     }
-
-    private void SetOutline(GameObject hitObject)
+    
+    private void CheckKey()
     {
-        if (hitObject)
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.A))
         {
-            outline = hitObject.GetComponent<Outline>();
-            outline.OutlineMode = Outline.Mode.OutlineVisible;
-            outline.OutlineColor = setColor1;
-            outline.OutlineWidth = 10.0f;
+            outlineShow = true;
         }
-
+        else if (!Input.GetKey(KeyCode.Space))
+        {
+            outlineShow = false;
+        }
     }
-       
+
+    private void ChangeOutline()
+    {
+        if(outlineShow)
+        {
+            outline.OutlineMode = Outline.Mode.OutlineVisible;
+        } else if (!outlineShow)
+        {
+            outline.OutlineMode = Outline.Mode.OutlineHidden;
+        }
+    }
+
+    private void ChangeColor()
+    {
+        
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.Space))
+        {
+            outline.OutlineColor = setColor2;
+        }
+        else
+        {
+            outline.OutlineColor = setColor1;
+        }
+    }
+    
 }

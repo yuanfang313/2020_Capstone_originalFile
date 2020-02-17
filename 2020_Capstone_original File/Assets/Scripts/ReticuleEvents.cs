@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ReticuleEvents : MonoBehaviour
 {
-    public PointerEvents pointerEvents;
     public SpriteRenderer CircleRenderer;
     public Sprite OpenSprite;
     public Sprite CloseSprite;
@@ -14,7 +13,6 @@ public class ReticuleEvents : MonoBehaviour
     private void Awake()
     {
        PointerEvents.OnPointerUpdate += UpdateSprite;
-       //PointerEvents.OnPointerUpdateWithTarget += UpdateSprite;
         Camera = Camera.main;
     }
 
@@ -26,7 +24,6 @@ public class ReticuleEvents : MonoBehaviour
     private void OnDestroy()
     {
         PointerEvents.OnPointerUpdate -= UpdateSprite;
-        //PointerEvents.OnPointerUpdateWithTarget -= UpdateSprite;
     }
 
     // sprite effects

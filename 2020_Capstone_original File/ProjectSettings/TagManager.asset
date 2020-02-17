@@ -8,6 +8,7 @@ TagManager:
   - level1
   - level2
   - backToMainMenu
+  - target
   layers:
   - Default
   - TransparentFX

@@ -10,17 +10,14 @@ public class PointerEvents : MonoBehaviour
 
     public LayerMask EverythingMask = 0;
     public LayerMask InteractableMask = 0;
-    public LayerMask TargetMask = 0;
 
     public static UnityAction<Vector3, GameObject> OnPointerUpdate = null;
-    public static UnityAction<Vector3, GameObject> OnPointerUpdateWithTarget = null;
     public static UnityAction<GameObject> OnPointerUpdateForObject = null;
-    public static UnityAction<GameObject> OnPointerUpdateForTarget = null;
+    
 
     private Transform CurrentOrigin = null;
     private Vector3 endPosition;
     private GameObject currentObject = null;
-    private GameObject currentTarget = null;
 
     private void Awake()
     {
@@ -41,23 +38,14 @@ public class PointerEvents : MonoBehaviour
     {
         Vector3 hitPoint = UpdateLine();//current position of endPosition
         currentObject = UpdatePointerStatus();//current gameObject being hitted
-        currentTarget = UpdatePointerStatusTarget();//current Target being hitted
-        
-        
+           
         //sent out OnPointerUpdate
         if (OnPointerUpdate != null)
             OnPointerUpdate(hitPoint, currentObject);
 
-       /* if (OnPointerUpdateWithTarget != null)
-            OnPointerUpdateWithTarget(hitPoint, currentTarget);*/
-
         //sent out OnPointerUpdateForObject
         if (OnPointerUpdateForObject != null)
             OnPointerUpdateForObject(currentObject);
-
-        //sent out OnPointerUpdateForTarget
-        if (OnPointerUpdateForTarget != null)
-            OnPointerUpdateForTarget(currentTarget);
     }
 
     private Vector3 UpdateLine()
@@ -84,19 +72,6 @@ public class PointerEvents : MonoBehaviour
     {
         //create ray
         RaycastHit hit = CreateRaycast(InteractableMask);
-
-        //check hit
-        if (hit.collider)
-            return hit.collider.gameObject;
-
-        //return
-        return null;
-    }
-
-    public GameObject UpdatePointerStatusTarget()
-    {
-        //create ray
-        RaycastHit hit = CreateRaycast(TargetMask);
 
         //check hit
         if (hit.collider)
