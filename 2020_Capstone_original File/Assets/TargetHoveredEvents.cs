@@ -22,13 +22,13 @@ public class TargetHoveredEvents : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
         audioSource_target.PlayOneShot(audioClip_target);
         transform.position = new Vector3(target_x, target_y, target_z);
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider collider)
     {
         transform.position = originalPosition;
     }

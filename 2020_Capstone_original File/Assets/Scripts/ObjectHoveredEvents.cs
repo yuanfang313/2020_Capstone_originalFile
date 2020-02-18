@@ -45,7 +45,7 @@ public class ObjectHoveredEvents : MonoBehaviour
     // change the scale of the object when being hovered over by pointer
     private void UpdateScaleOfObject(GameObject hitObject)
     {
-        if (hitObject && hitObject.tag != "target")
+        if (hitObject && hitObject.tag != "target" && hitObject.tag != "rightAnswer")
         {
            getHittedObject().transform.localScale = hoveredScale;
         }
@@ -58,7 +58,7 @@ public class ObjectHoveredEvents : MonoBehaviour
     //add sound when being hovered over by pointer
     private void UpdateSound_hover(GameObject hitObject)
     {
-        if (hitObject && !hadHit && hitObject.tag != "target")
+        if (hitObject && !hadHit && hitObject.tag != "target" && hitObject.tag != "rightAnswer")
         {
             audioSource_hover.Play();
             hadHit = true;

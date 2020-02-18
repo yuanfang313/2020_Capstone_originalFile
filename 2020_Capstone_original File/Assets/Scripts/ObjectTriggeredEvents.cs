@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class ObjectTriggeredEvents : MonoBehaviour
 {
     public AudioSource audioSource_click;
+    public bool hadTriggeredTarget = false;
+    public bool hadTriggeredRightTarget = false;
    
     private string tagOfHittedObject = null;
     private OVRInput.Controller currentController;
@@ -69,7 +71,7 @@ public class ObjectTriggeredEvents : MonoBehaviour
     {
         tagOfHittedObject = hitObject.tag;
 
-        if (hitObject && triggerDown)
+        if (hitObject && triggerDown && hitObject.tag != "target" && hitObject.tag != "rightAnswer")
         {
             startTimer = true;
         }
@@ -98,11 +100,22 @@ public class ObjectTriggeredEvents : MonoBehaviour
 
     private void UpdateSound_click(GameObject hitObject)
     {
-        if(hitObject && triggerDown & !hadPlay)
+        if(hitObject && triggerDown && !hadPlay)
         {
             audioSource_click.Play();
             OVRInput.SetControllerVibration(0.1f, 0.1f, currentController);
             hadPlay = true;
+            if(hitObject.tag == "rightAnswer")
+            {
+                hadTriggeredTarget = true;
+                hadTriggeredRightTarget = true;
+            }
+
+            if (hitObject.tag == "target")
+            {
+                hadTriggeredTarget = true;
+                hadTriggeredRightTarget = false;
+            }
         }
         else if(!triggerDown)
         {

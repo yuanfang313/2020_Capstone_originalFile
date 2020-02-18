@@ -9,6 +9,7 @@ TagManager:
   - level2
   - backToMainMenu
   - target
+  - rightAnswer
   layers:
   - Default
   - TransparentFX
