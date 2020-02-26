@@ -7,8 +7,11 @@ public class AnswerChoosing : MonoBehaviour
     public ObjectTriggeredEvents objectTriggeredEvents;
     public GameObject prefabTarget1;
     public GameObject prefabTarget2;
+    public GameObject prefabTarget3;
     public Transform target1_p;
     public Transform target2_p;
+    public Transform target3_p;
+
     public AudioSource audioSource_voice;
     public AudioClip audioClip_0;
     public AudioClip audioClip_1;
@@ -49,6 +52,7 @@ public class AnswerChoosing : MonoBehaviour
 
     private GameObject target1InScene;
     private GameObject target2InScene;
+    private GameObject target3InScene;
 
 
     
@@ -139,6 +143,7 @@ public class AnswerChoosing : MonoBehaviour
             PlayAudioClip_3();
             Destroy(target1InScene);
             Destroy(target2InScene);
+            Destroy(target3InScene);
         }
 
         if(timer6 >= 30)
@@ -183,6 +188,7 @@ public class AnswerChoosing : MonoBehaviour
 
             Destroy(target1InScene);
             Destroy(target2InScene);
+            Destroy(target3InScene);
         }
 
         if(timer2 >= 30)
@@ -219,6 +225,7 @@ public class AnswerChoosing : MonoBehaviour
             PlayAudioClip_3();
             Destroy(target1InScene);
             Destroy(target2InScene);
+            Destroy(target3InScene);
         }
 
         if (timer4 >= 15)
@@ -249,15 +256,38 @@ public class AnswerChoosing : MonoBehaviour
     // generate targets
     private void GenerateTargets()
     {
-        int positions = Random.Range(1,3);
+        int positions = Random.Range(1,7);
+
         if(positions == 1)
         {
             target1InScene = Instantiate(prefabTarget1, target1_p.position, Quaternion.AngleAxis(90, Vector3.up));
             target2InScene = Instantiate(prefabTarget2, target2_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target3InScene = Instantiate(prefabTarget3, target3_p.position, Quaternion.AngleAxis(90, Vector3.up));
         } else if (positions == 2)
         {
             target1InScene = Instantiate(prefabTarget1, target2_p.position, Quaternion.AngleAxis(90, Vector3.up));
             target2InScene = Instantiate(prefabTarget2, target1_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target3InScene = Instantiate(prefabTarget3, target3_p.position, Quaternion.AngleAxis(90, Vector3.up));
+        } else if (positions ==3)
+        {
+            target1InScene = Instantiate(prefabTarget1, target2_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target2InScene = Instantiate(prefabTarget2, target3_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target3InScene = Instantiate(prefabTarget3, target1_p.position, Quaternion.AngleAxis(90, Vector3.up));
+        } else if (positions == 4)
+        {
+            target1InScene = Instantiate(prefabTarget1, target1_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target2InScene = Instantiate(prefabTarget2, target3_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target3InScene = Instantiate(prefabTarget3, target2_p.position, Quaternion.AngleAxis(90, Vector3.up));
+        } else if (positions == 5)
+        {
+            target1InScene = Instantiate(prefabTarget1, target3_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target2InScene = Instantiate(prefabTarget2, target1_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target3InScene = Instantiate(prefabTarget3, target2_p.position, Quaternion.AngleAxis(90, Vector3.up));
+        } else if (positions == 6)
+        {
+            target1InScene = Instantiate(prefabTarget1, target3_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target2InScene = Instantiate(prefabTarget2, target2_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target3InScene = Instantiate(prefabTarget3, target1_p.position, Quaternion.AngleAxis(90, Vector3.up));
         }
     }
 
