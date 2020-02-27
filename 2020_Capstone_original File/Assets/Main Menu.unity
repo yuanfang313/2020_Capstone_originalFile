@@ -782,7 +782,7 @@ PrefabInstance:
     - target: {fileID: 1758368603515590018, guid: e019175ddaa2da64a99ad87fdf6e5380,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 1758368603515590018, guid: e019175ddaa2da64a99ad87fdf6e5380,
         type: 3}
@@ -958,7 +958,7 @@ PrefabInstance:
     - target: {fileID: 1758368603515590018, guid: e019175ddaa2da64a99ad87fdf6e5380,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 1758368603515590018, guid: e019175ddaa2da64a99ad87fdf6e5380,
         type: 3}
@@ -1169,7 +1169,7 @@ PrefabInstance:
     - target: {fileID: 1758368603515590018, guid: e019175ddaa2da64a99ad87fdf6e5380,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 1758368603515590018, guid: e019175ddaa2da64a99ad87fdf6e5380,
         type: 3}
@@ -1750,6 +1750,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: TriggeringEventsController
       objectReference: {fileID: 0}
+    - target: {fileID: 1919809833163196485, guid: 0d66aa3592b0fe34182f11f70606b5d6,
+        type: 3}
+      propertyPath: audioSource_click
+      value: 
+      objectReference: {fileID: 1303545058}
+    - target: {fileID: 1919809833163196485, guid: 0d66aa3592b0fe34182f11f70606b5d6,
+        type: 3}
+      propertyPath: auidoClip_click
+      value: 
+      objectReference: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
     - target: {fileID: 6543450343800451940, guid: 0d66aa3592b0fe34182f11f70606b5d6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1805,16 +1815,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1919809833163196485, guid: 0d66aa3592b0fe34182f11f70606b5d6,
-        type: 3}
-      propertyPath: audioSource_click
-      value: 
-      objectReference: {fileID: 1303545058}
-    - target: {fileID: 1919809833163196485, guid: 0d66aa3592b0fe34182f11f70606b5d6,
-        type: 3}
-      propertyPath: auidoClip_click
-      value: 
-      objectReference: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d66aa3592b0fe34182f11f70606b5d6, type: 3}
 --- !u!4 &7387830227788109833 stripped

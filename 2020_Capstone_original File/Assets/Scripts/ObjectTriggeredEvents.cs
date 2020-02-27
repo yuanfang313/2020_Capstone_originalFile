@@ -44,6 +44,15 @@ public class ObjectTriggeredEvents : MonoBehaviour
         {
             triggerDown = false;
         }
+        // check for buttonA & buttonB down
+        if (OVRInput.GetDown(OVRInput.Button.One) ||
+            OVRInput.GetDown(OVRInput.Button.Three))
+        {
+            SceneManager.LoadScene("Main Menu");
+        } 
+
+
+
 
         Timer();
     }

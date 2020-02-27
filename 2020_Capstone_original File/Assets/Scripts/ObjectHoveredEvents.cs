@@ -6,7 +6,7 @@ public class ObjectHoveredEvents : MonoBehaviour
 {
     public PointerEvents pointerEvents;
     public AudioSource audioSource_hover;
-    public AudioSource audioSource_target;
+    
 
     private Vector3 hoveredScale = new Vector3(0.7f, 0.7f, 0.7f);
     private Vector3 originalScale = new Vector3(0.5f, 0.5f, 0.5f);

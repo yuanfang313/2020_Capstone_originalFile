@@ -258,13 +258,13 @@ public class AnswerChoosing01 : MonoBehaviour
 
         if (positions == 1)
         {
-            target1InScene = Instantiate(prefabTarget1, target1_p.position, Quaternion.AngleAxis(90, Vector3.up));
-            target2InScene = Instantiate(prefabTarget2, target2_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target1InScene = Instantiate(prefabTarget1, target1_p.position, Quaternion.AngleAxis(130, Vector3.up));
+            target2InScene = Instantiate(prefabTarget2, target2_p.position, Quaternion.AngleAxis(230, Vector3.up));
         }
         else if (positions == 2)
         {
-            target1InScene = Instantiate(prefabTarget1, target2_p.position, Quaternion.AngleAxis(90, Vector3.up));
-            target2InScene = Instantiate(prefabTarget2, target1_p.position, Quaternion.AngleAxis(90, Vector3.up));
+            target1InScene = Instantiate(prefabTarget1, target2_p.position, Quaternion.AngleAxis(230, Vector3.up));
+            target2InScene = Instantiate(prefabTarget2, target1_p.position, Quaternion.AngleAxis(130, Vector3.up));
         }
     }
 
