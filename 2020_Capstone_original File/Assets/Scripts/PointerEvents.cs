@@ -15,7 +15,7 @@ public class PointerEvents : MonoBehaviour
     public static UnityAction<GameObject> OnPointerUpdateForObject = null;
     
 
-    private Transform CurrentOrigin = null;
+    public Transform CurrentOrigin = null;
     private Vector3 endPosition;
     private GameObject currentObject = null;
 

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2476016534506502134}
   - component: {fileID: 2476016534506502132}
   - component: {fileID: 6423637172138869203}
+  - component: {fileID: 1007931223}
+  - component: {fileID: 1007931222}
   m_Layer: 0
   m_Name: ReticuleEventsController
   m_TagString: Untagged
@@ -46,6 +48,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -57,6 +60,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -92,7 +96,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6e4fe95f8e03b40b3715f4b3f49521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointerEvents: {fileID: 0}
   CircleRenderer: {fileID: 2476016534506502132}
   OpenSprite: {fileID: 21300000, guid: 4642eb80097de6a4bb84ab6629e729c8, type: 3}
   CloseSprite: {fileID: 21300000, guid: 0856aedd05e1e7c4da2254653a766dfe, type: 3}
+--- !u!54 &1007931223
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2476016534506502131}
+  serializedVersion: 2
+  m_Mass: 0.05
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1007931222
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2476016534506502131}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.2, z: 0.05}
+  m_Center: {x: 0, y: 0, z: 0}
