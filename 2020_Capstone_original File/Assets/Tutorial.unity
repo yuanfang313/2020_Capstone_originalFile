@@ -242,7 +242,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 42a96f5101921f44cba40e49b160d370, type: 2}
+  - {fileID: 2100000, guid: 711a1750881e2214ca802f38c08f2c7f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -983,13 +983,39 @@ PrefabInstance:
       objectReference: {fileID: 7387830227788109834}
     - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
         type: 3}
-      propertyPath: pointerEvents
-      value: 
-      objectReference: {fileID: 8380476532403653960}
+      propertyPath: timer1
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
         type: 3}
-      propertyPath: startTimeBtwShots
+      propertyPath: intervalTimer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
+        type: 3}
+      propertyPath: timer5
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
+        type: 3}
+      propertyPath: timer2
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
+        type: 3}
+      propertyPath: timer3
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
+        type: 3}
+      propertyPath: prefabTrailObject
+      value: 
+      objectReference: {fileID: 2905598117334690051, guid: 1b7cbf689cc937d4d866925a1b3e19c8,
+        type: 3}
+    - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
+        type: 3}
+      propertyPath: timer4
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7a65be84c850bf43be649eeb324aac3, type: 3}
