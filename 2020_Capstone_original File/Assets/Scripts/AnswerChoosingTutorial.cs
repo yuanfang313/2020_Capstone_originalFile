@@ -76,10 +76,9 @@ public class AnswerChoosingTutorial : MonoBehaviour
     #region privateRegion objects
     private GameObject target1InScene;
     private GameObject target2InScene;
-    //private GameObject target3InScene;
     #endregion
 
-    #region traceObject Generate
+    #region trailObject Generate
     private float timeBtwShots;
     public float startTimeBtwShots;
 
@@ -198,7 +197,8 @@ public class AnswerChoosingTutorial : MonoBehaviour
             if(playRandom == 1)
             {
                 PlayAudioClip_4();
-            }else if (playRandom == 2 || playRandom == 3)
+            }
+            else if (playRandom == 2 || playRandom == 3)
             {
                 PlayAudioClip_7();
             }

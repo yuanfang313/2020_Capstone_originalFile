@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2476016534506502134}
   - component: {fileID: 2476016534506502132}
   - component: {fileID: 6423637172138869203}
-  - component: {fileID: 1007931223}
   - component: {fileID: 1007931222}
+  - component: {fileID: 1007931223}
+  - component: {fileID: 4011770647455912926}
   m_Layer: 0
   m_Name: ReticuleEventsController
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4642eb80097de6a4bb84ab6629e729c8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5852a89b2920a449b9dcb14f47ec598, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,8 +98,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CircleRenderer: {fileID: 2476016534506502132}
-  OpenSprite: {fileID: 21300000, guid: 4642eb80097de6a4bb84ab6629e729c8, type: 3}
+  OpenSprite: {fileID: 21300000, guid: c5852a89b2920a449b9dcb14f47ec598, type: 3}
   CloseSprite: {fileID: 21300000, guid: 0856aedd05e1e7c4da2254653a766dfe, type: 3}
+--- !u!65 &1007931222
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2476016534506502131}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.2, z: 0.05}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1007931223
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -115,7 +129,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &1007931222
+--- !u!65 &4011770647455912926
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
