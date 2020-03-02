@@ -26,13 +26,6 @@ public class reminderTrace : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "rightAnswer")
-        {
-            DestroyReminderObject();
-        }
-    }
     private void DestroyReminderObject()
     {
         Destroy(gameObject);

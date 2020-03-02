@@ -999,12 +999,12 @@ PrefabInstance:
     - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
         type: 3}
       propertyPath: timer2
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
         type: 3}
       propertyPath: timer3
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
         type: 3}

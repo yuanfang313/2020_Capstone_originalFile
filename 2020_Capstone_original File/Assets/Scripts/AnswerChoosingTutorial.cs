@@ -113,6 +113,7 @@ public class AnswerChoosingTutorial : MonoBehaviour
         welcomeTimer();
         IntervalTimer();
         repeatPromptTimer1();
+        repeatPromptTimer2();
         rightAnswerTimer();
         
         //prompts before answer
@@ -152,16 +153,17 @@ public class AnswerChoosingTutorial : MonoBehaviour
         }
 
         // play touchHorse clip
-        if (intervalTimer <= 0 && roundHadFinished && count < 3)
+        if (_intervalTimer <= 0 && roundHadFinished && count < 3)
         {
             PlayAudioClip_1();
         }
 
         // generate items ramdomly
-        if (hadPlay1 && hadFinished && !generated)
+        if (hadPlay1 && roundHadFinished && !generated)
         {
             GenerateTargets();
             generated = true;
+            roundHadFinished = false;
         }
 
     }
@@ -189,16 +191,23 @@ public class AnswerChoosingTutorial : MonoBehaviour
     // 1. time is up
     private void RepeatPrompt1()
     {
+        int playRandom = Random.Range(1, 4);
+
         if (_timer3 <= 0)
         {
-            PlayAudioClip_4();
-            PlayAudioClip_7();
-            startTrail = true;
-            _timer3 = timer3;
+            if(playRandom == 1)
+            {
+                PlayAudioClip_4();
+            }else if (playRandom == 2 || playRandom == 3)
+            {
+                PlayAudioClip_7();
+            }
+            startTrail = true;   
         }
 
         if (hadPlay4 || hadPlay7)
         {
+            _timer3 = timer3;
             hadPlay1 = false;
             hadPlay2 = false;
             hadPlay3 = false;
@@ -214,21 +223,24 @@ public class AnswerChoosingTutorial : MonoBehaviour
             roundHadFinished = false;
         }
     }
+
     private void RepeatPrompt2()
     {
         if (_timer4 != timer4 && _timer4 > 0)
         {
             GenerateTrailObject();
+            
         } else if (_timer4 <= 0)
         {
             startTrail = false;
         }
     }
+
     // 2. answer is right
     private void AnswerIsRight()
     {
         PlayAudioClip_2();
-        if (_timer2 <= 0)
+        if (_timer2 <= 0 && hadPlay2)
         {
             if (count < 3)
             {
@@ -247,6 +259,7 @@ public class AnswerChoosingTutorial : MonoBehaviour
 
         if (hadPlay3 || hadPlay6)
         {
+            _timer3 = timer3;
             hadPlay1 = false;
             hadPlay2 = false;
             hadPlay3 = false;
@@ -262,6 +275,7 @@ public class AnswerChoosingTutorial : MonoBehaviour
             roundHadFinished = true;
         }
     }
+
     // 3. answer is wrong
     private void AnswerIsWrong()
     {
@@ -269,6 +283,7 @@ public class AnswerChoosingTutorial : MonoBehaviour
 
         if (hadPlay5)
         {
+            _timer3 = timer3;
             hadPlay1 = false;
             hadPlay2 = false;
             hadPlay3 = false;
@@ -397,7 +412,6 @@ public class AnswerChoosingTutorial : MonoBehaviour
             hadStarted = true;
             hadFinished = false;
             hadPlay1 = true;
-            roundHadFinished = false;
         }
         else if (!audioSource_voice.isPlaying)
         {
@@ -416,7 +430,6 @@ public class AnswerChoosingTutorial : MonoBehaviour
             hadStarted = true;
             hadFinished = false;
             hadPlay2 = true;
-
         }
         else if (!audioSource_voice.isPlaying)
         {

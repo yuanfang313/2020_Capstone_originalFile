@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7011256657939682900}
   - component: {fileID: 6085142694296398635}
   m_Layer: 0
-  m_Name: reminderObject
+  m_Name: TrailObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ SphereCollider:
   m_GameObject: {fileID: 2905598117334690051}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -148,7 +148,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 1
+  m_Time: 2
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.2
@@ -156,8 +156,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.005207062
+        value: 0.75
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -165,8 +165,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.9771986
-        value: 0
+        time: 0.98762035
+        value: 0.5
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -178,7 +178,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.040850822, g: 0.9622642, b: 0.89854956, a: 1}
+      key0: {r: 0.0046279924, g: 0.9811321, b: 0.9146466, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
