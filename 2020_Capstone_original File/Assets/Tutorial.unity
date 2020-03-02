@@ -242,7 +242,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 711a1750881e2214ca802f38c08f2c7f, type: 2}
+  - {fileID: 2100000, guid: 42a96f5101921f44cba40e49b160d370, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1010,7 +1010,7 @@ PrefabInstance:
         type: 3}
       propertyPath: prefabTrailObject
       value: 
-      objectReference: {fileID: 2905598117334690051, guid: 1b7cbf689cc937d4d866925a1b3e19c8,
+      objectReference: {fileID: 6217196472274857551, guid: d51cdea92009dd0478c07dfbe5faf283,
         type: 3}
     - target: {fileID: 1320104996487688543, guid: a7a65be84c850bf43be649eeb324aac3,
         type: 3}
@@ -1132,6 +1132,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: ReticuleEventsController
       objectReference: {fileID: 0}
+    - target: {fileID: 2476016534506502132, guid: a4861663b55897f47ba28b0169e80a1f,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c5852a89b2920a449b9dcb14f47ec598,
+        type: 3}
+    - target: {fileID: 2476016534506502132, guid: a4861663b55897f47ba28b0169e80a1f,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2476016534506502134, guid: a4861663b55897f47ba28b0169e80a1f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1192,6 +1203,12 @@ PrefabInstance:
       propertyPath: pointerEvents
       value: 
       objectReference: {fileID: 8380476532403653960}
+    - target: {fileID: 6423637172138869203, guid: a4861663b55897f47ba28b0169e80a1f,
+        type: 3}
+      propertyPath: OpenSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c5852a89b2920a449b9dcb14f47ec598,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4861663b55897f47ba28b0169e80a1f, type: 3}
 --- !u!1001 &4526158503687163920
