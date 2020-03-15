@@ -12,15 +12,21 @@ public class reminderTrace : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rightAnswer = GameObject.FindGameObjectWithTag("rightAnswer").transform;
+        rightAnswer = GameObject.FindGameObjectWithTag("rightAnswerPosition").transform;
         target = new Vector3(rightAnswer.position.x, rightAnswer.position.y, rightAnswer.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, rightAnswer.position, speed * Time.deltaTime);
-        if (transform.position.x == target.x && transform.position.y == target.y && transform.position.z == target.z)
+        if(rightAnswer != null)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, rightAnswer.position, speed * Time.deltaTime);
+            if (transform.position.x == target.x && transform.position.y == target.y && transform.position.z == target.z)
+            {
+                DestroyReminderObject();
+            }
+        } else
         {
             DestroyReminderObject();
         }

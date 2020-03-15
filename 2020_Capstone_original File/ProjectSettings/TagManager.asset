@@ -10,6 +10,8 @@ TagManager:
   - backToMainMenu
   - target
   - rightAnswer
+  - rightAnswerPosition
+  - rightAnswerPosition_rings
   layers:
   - Default
   - TransparentFX
