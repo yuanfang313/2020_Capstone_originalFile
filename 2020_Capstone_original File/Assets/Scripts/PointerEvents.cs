@@ -18,6 +18,7 @@ public class PointerEvents : MonoBehaviour
     public Transform CurrentOrigin = null;
     private Vector3 endPosition;
     private GameObject currentObject = null;
+    private bool hitObject = false;
 
     private void Awake()
     {
@@ -38,7 +39,8 @@ public class PointerEvents : MonoBehaviour
     {
         Vector3 hitPoint = UpdateLine();//current position of endPosition
         currentObject = UpdatePointerStatus();//current gameObject being hitted
-           
+
+        SetLineColor();
         //sent out OnPointerUpdate
         if (OnPointerUpdate != null)
             OnPointerUpdate(hitPoint, currentObject);
@@ -75,10 +77,15 @@ public class PointerEvents : MonoBehaviour
 
         //check hit
         if (hit.collider)
+        {
+            hitObject = true;
             return hit.collider.gameObject;
-
-        //return
-        return null;
+        } else
+        {
+            //return
+            hitObject = false;
+            return null;
+        }
     }
 
     private void UpdateOrigin(OVRInput.Controller controller, GameObject controllerObject)
@@ -100,9 +107,22 @@ public class PointerEvents : MonoBehaviour
     {
         if (!LineRenderer)
             return;
+        // !hitObject
+        Color startColor1 = Color.white;
+        Color endColor1 = Color.white;
+        endColor1.a = 0.0f;
+        // hitObject
+        Color startColor2 = new Color(0.4f, 1.0f, 1.0f, 1.0f);
+        Color endColor2 = new Color(0.4f, 1.0f, 1.0f, 0.0f);
 
-        Color endColor = Color.white;
-        endColor.a = 0.0f;
-        LineRenderer.endColor = endColor;
+        if (hitObject)
+        {
+            LineRenderer.startColor = startColor2;
+            LineRenderer.endColor = endColor2;
+        } else if(!hitObject)
+        {
+            LineRenderer.startColor = startColor1;
+            LineRenderer.endColor = endColor1;
+        }
     }
 }
