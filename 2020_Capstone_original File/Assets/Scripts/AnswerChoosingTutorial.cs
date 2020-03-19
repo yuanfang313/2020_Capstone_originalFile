@@ -19,6 +19,7 @@ public class AnswerChoosingTutorial : MonoBehaviour
     public Transform target2_p;
     public Transform bubbleTransformAnchor;
 
+    public GameObject ringEffect_0;
     public GameObject ringEffect_1;
     public GameObject ringEffect_2;
     public GameObject bubbleParticles;
@@ -102,6 +103,7 @@ public class AnswerChoosingTutorial : MonoBehaviour
     private bool answerCorrected = false;
     private bool generated = false;
     private bool startTrail = false;
+    private bool startRing0 = false;
     private bool startRing1 = false;
     private bool startRing2 = false;
     private bool startPrompts = false;
@@ -110,11 +112,13 @@ public class AnswerChoosingTutorial : MonoBehaviour
 
     #region privateRegion objects
     private GameObject target1InScene;
+    private GameObject ringInScene0;
     private GameObject ringInScene1;
     private GameObject ringInScene2;
     private GameObject trailsInScene;
     private GameObject bubbleInScene;
     private Transform rightAnswerTransformForRings;
+    private ParticleSystem[] ringParticleInScene0;
     private ParticleSystem ringParticleInScene1;
     private ParticleSystem ringParticleInScene2;
     private Animator deerAnimator;
@@ -292,6 +296,7 @@ public class AnswerChoosingTutorial : MonoBehaviour
         }
     }
 
+    // 1-2. visual prompts
     private void visualPrompt()
     {
         // when the interval time ends
@@ -385,7 +390,6 @@ public class AnswerChoosingTutorial : MonoBehaviour
         }
     }
 
-    // 1-2. visual prompts
     private void visualPromptTimer_f()
     {
         if(generated && !answered && !startPrompts)
@@ -411,6 +415,28 @@ public class AnswerChoosingTutorial : MonoBehaviour
         PlayAudioClip_8();
         GenerateBubbles();
 
+        if (ringInScene1 != null || ringInScene2 != null)
+        {
+            ringParticleInScene1.Stop();
+            if(ringInScene2 != null)
+            {
+                ringParticleInScene2.Stop();
+            } 
+        }
+
+        GenerateRingObject0();
+
+        if (deerAnimator != null)
+        {
+            deerAnimator.SetBool("isWalking", true);
+        }
+
+        if (startTrail)
+        {
+            startTrail = false;
+        }
+
+
         if (_timer2 <= 0 && hadPlay2)
         {
             if (count < 5)
@@ -426,6 +452,7 @@ public class AnswerChoosingTutorial : MonoBehaviour
             Destroy(target1InScene);
             Destroy(ringInScene1);
             Destroy(ringInScene2);
+            Destroy(ringInScene0);
             Destroy(bubbleInScene);
             deerAnimator.SetBool("isWalking", false);
             OVRInput.SetControllerVibration(0, 0, controllerMask);
@@ -458,6 +485,7 @@ public class AnswerChoosingTutorial : MonoBehaviour
             hadPlay8 = false;
             startRing1 = false;
             startRing2 = false;
+            startRing0 = false;
             startTrail = false;
             startPrompts = false;
             startBubbles = false;
@@ -530,7 +558,16 @@ public class AnswerChoosingTutorial : MonoBehaviour
             OVRInput.SetControllerVibration(0.1f, 0.1f, controllerMask);
         } 
     }
-
+    //generate ring0
+    private void GenerateRingObject0()
+    {
+        if (!startRing0)
+        {
+            ringInScene0 = Instantiate(ringEffect_0, rightAnswerTransformForRings.position, Quaternion.AngleAxis(0, Vector3.left));
+            ringParticleInScene0 = ringInScene0.GetComponentsInChildren<ParticleSystem>();
+            startRing0 = true;
+        }
+    }
     // generate ring1
     private void GenerateRingObject1()
     {

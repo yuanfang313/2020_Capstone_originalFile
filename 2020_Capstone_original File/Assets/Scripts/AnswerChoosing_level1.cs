@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AnswerChoosing01 : MonoBehaviour
+public class AnswerChoosing_level1 : MonoBehaviour
 {
     // public field
     #region publicScripts
@@ -23,11 +23,14 @@ public class AnswerChoosing01 : MonoBehaviour
     public GameObject ringEffect_1;
     public GameObject ringEffect_2;
     public GameObject bubbleParticles;
-
     public Text voicePCounter_t;
     public Text visualPCounter_t;
+    public Text roundCounter_t;
     public Text visualPTimer_f;
     public Text visualPTimer_d;
+    public Text boolOfTesting_t;
+    public Text boolOfTeaching_t;
+    public Text timer3_t;
     #endregion
 
     #region publicAudios
@@ -38,6 +41,7 @@ public class AnswerChoosing01 : MonoBehaviour
 
     #region publicTimers
     [Header("TIMERS")]
+
     [Tooltip("timer1 is the timer before 'welcome clip'")]
     [SerializeField] private float timer1 = 0;
 
@@ -46,6 +50,12 @@ public class AnswerChoosing01 : MonoBehaviour
 
     [Tooltip("timer2 is the timer between 'goodJob clip' and 'tryAnotherRound clip' ")]
     [SerializeField] private float timer2 = 0;
+
+    [Tooltip("timer3 is the timer between 'Ah-Oh' and 'tryAnotherRound clip' ")]
+    [SerializeField] private float timer3 = 0;
+
+    [Tooltip("timer4 is the timer between 'no answer' and 'tryAnotherRound clip' ")]
+    [SerializeField] private float timer4 = 0;
 
     [Tooltip("voicePTimer1 is the first timer of the frequency of voice prompt")]
     [SerializeField] private float voicePTimer1 = 0;
@@ -66,37 +76,26 @@ public class AnswerChoosing01 : MonoBehaviour
     [SerializeField] private float visualPromptTimer2_d = 0;
     #endregion
 
-    // publicUI
-    #region publicUI
-    [Header("UI")]
-    public Text scoreOfSession1;
-    public Text scoreOfSession2;
-    public Text timerCountDown;
-    public Text numOfRound;
-    #endregion
-
-
-
     // private field
-    // private UI
-    #region privateUI
-    private string strTimerRound;
-    private string score1;
-    private string score2;
-    #endregion
     #region privateTimers
     private float _timer1 = 0;
     private float _intervalTimer = 0;
     private float _timer2 = 0;
+    private float _timer3 = 0;
+    private float _timer4 = 0;
     private float voicePTempTimer = 0;
     private float visualPTempTimer_f = 0;
     private float visualPTempTimer_d = 0;
     #endregion
-    private int countRightAnswer1 = 0;
-    private int countRightAnswer2 = 0;
+
+    private int count = 0;
+
+    // vr ui debugging
     private int voicePromptCounter = 0;
     private int visualPromptCounter = 0;
-    private int roundCounter = 1;
+    private int int_visualPTempTimer_f = 0;
+    private int int_visualPTempTimer_d = 0;
+
 
     #region private bool variables
     private bool hadPlay0 = false;
@@ -122,17 +121,11 @@ public class AnswerChoosing01 : MonoBehaviour
     private bool startRing2 = false;
     private bool startPrompts = false;
     private bool startBubbles = false;
-    private bool sessionIsTeaching = false;
-    private bool sessionFinished = false;
-
-    private bool hadPassed = false;
-
+    private bool sessionIsTesting = true;
     #endregion
 
     #region privateRegion objects
     private GameObject target1InScene;
-    private GameObject target2InScene;
-
     private GameObject ringInScene0;
     private GameObject ringInScene1;
     private GameObject ringInScene2;
@@ -142,7 +135,8 @@ public class AnswerChoosing01 : MonoBehaviour
     private ParticleSystem[] ringParticleInScene0;
     private ParticleSystem ringParticleInScene1;
     private ParticleSystem ringParticleInScene2;
-    private Animator horseAnimator;
+    private Animator deerAnimator;
+    private GameObject target2InScene;
     #endregion
 
     #region trailObject Generate
@@ -155,26 +149,32 @@ public class AnswerChoosing01 : MonoBehaviour
     private OVRInput.Controller controllerMask;
     #endregion
 
-
-
+    private void Awake()
+    {
+        ControllerEvents.OnControllerSource += UpdateOrigin;
+    }
     // Start is called before the first frame update
     void Start()
     {
         _timer1 = timer1;
         _intervalTimer = intervalTimer;
         _timer2 = timer2;
+        _timer3 = timer3;
+        timer3_t.text = _timer3.ToString("F1");
 
         timeBtwShots = startTimeBtwShots;
 
         voicePTempTimer = voicePTimer1;
         visualPTempTimer_f = visualPromptTimer1_f;
         visualPTempTimer_d = visualPromptTimer1_d;
-
-        //UI
-        scoreOfSession1.text = "0";
-        scoreOfSession2.text = "0";
-        numOfRound.text = "1";
-
+        count = 0;
+        PrintVoicePrompts();
+        PrintVisualPrompts();
+        PrintVisualPrompts_f();
+        PrintVisualPrompts_d();
+        PrintRounds();
+        boolOfTesting_t.text = "1";
+        boolOfTeaching_t.text = "0";
     }
 
     // Update is called once per frame
@@ -187,30 +187,17 @@ public class AnswerChoosing01 : MonoBehaviour
         visualPromptTimer_f();
         visualPromptTimer_d();
         rightAnswerTimer();
+        wrongAnswerTimer();
 
         //prompts before answer
         SetupQuestion();
         AnswerIsRightEventHandler();
         AnswerIsWrongEventHandler();
+        SessionIsTestingEventHandler();
         voicePrompt();
         visualPrompt();
 
-        //count & print rounds
-        if (roundCounter <= 10)
-        {
-            numOfRound.text = roundCounter.ToString();
-        }
-
-        // count & print rounds of right answer
-        if(roundCounter <= 5)
-        {
-            scoreOfSession1.text = countRightAnswer1.ToString();
-        } else if (roundCounter > 5)
-        {
-            scoreOfSession2.text = countRightAnswer2.ToString();
-        }
-        
-        // definition of right & wrong
+        // had chose the answer
         if (answered && answerCorrected)
         {
             AnswerIsRight();
@@ -219,17 +206,17 @@ public class AnswerChoosing01 : MonoBehaviour
         {
             AnswerIsWrong();
         }
+    }
 
-        // definition of passed & !passed
-        if (countRightAnswer1 >= 4 && countRightAnswer2 >= 4)
-        {
-            hadPassed = true;
-        }
-        else if (countRightAnswer1 < 4 || countRightAnswer2 < 4)
-        {
-            hadPassed = false;
-        }
+    private void OnDestroy()
+    {
+        ControllerEvents.OnControllerSource -= UpdateOrigin;
+    }
 
+    private void UpdateOrigin(OVRInput.Controller controller, GameObject controllerObject)
+    {
+        controllerTransform = controllerObject.transform;
+        controllerMask = controller;
     }
 
     private void SetupQuestion()
@@ -241,7 +228,7 @@ public class AnswerChoosing01 : MonoBehaviour
         }
 
         // play touchHorse clip
-        if (_intervalTimer <= 0 && roundHadFinished && roundCounter < 5)
+        if (_intervalTimer <= 0 && roundHadFinished && count < 5)
         {
             PlayAudioClip_1();
         }
@@ -253,6 +240,7 @@ public class AnswerChoosing01 : MonoBehaviour
             generated = true;
             roundHadFinished = false;
         }
+
     }
 
     // definition of right and wrong
@@ -274,10 +262,26 @@ public class AnswerChoosing01 : MonoBehaviour
         }
     }
 
-    // results of answer
+    private void SessionIsTestingEventHandler()
+    {
+        if (!sessionIsTesting)
+        {
+            boolOfTeaching_t.text = "1";
+            boolOfTesting_t.text = "0";
+        } else if (sessionIsTesting)
+        {
+            boolOfTeaching_t.text = "0";
+            boolOfTesting_t.text = "1";
+        }
+    }
+
+    /* results of answer */
+    // 1. prompts
+    // 1-1. voice prompts
     private void voicePrompt()
     {
         int playRandom = Random.Range(1, 4);
+
         if (voicePTempTimer <= 0)
         {
             if (playRandom == 1)
@@ -290,45 +294,19 @@ public class AnswerChoosing01 : MonoBehaviour
             }
         }
 
-        if(hadPlay4 || hadPlay7)
+        if (hadPlay4 || hadPlay7)
         {
             voicePromptCounter = voicePromptCounter + 1;
+            PrintVoicePrompts();
 
-            // print voicePromptCounter
-            if (voicePromptCounter <= 2)
+            if (voicePromptCounter <= 5)
             {
                 voicePTempTimer = voicePTimer1;
             }
-            else if (voicePromptCounter > 2)
+            else if (voicePromptCounter > 5)
             {
                 voicePTempTimer = voicePTimer2;
             }
-
-            hadPlay4 = false;
-            hadPlay7 = false;
-            answered = false;
-            answerCorrected = false;
-            objectTriggeredEvents.hadTriggeredTarget = false;
-            objectTriggeredEvents.hadTriggeredRightTarget = false;
-            generated = true;
-            roundHadFinished = false;
-        }
-
-        if (roundHadFinished)
-        {
-            if (roundCounter < 5)
-            {
-                PlayAudioClip_3();
-            }
-            else if (roundCounter == 5)
-            {
-                TakeSessionBreak();
-            }
-                
-            Destroy(target1InScene);
-            Destroy(target2InScene);
-            _intervalTimer = intervalTimer;
-            _timer2 = timer2;
 
             hadPlay1 = false;
             hadPlay2 = false;
@@ -337,15 +315,12 @@ public class AnswerChoosing01 : MonoBehaviour
             hadPlay5 = false;
             hadPlay6 = false;
             hadPlay7 = false;
-            hadPlay8 = false;
             answered = false;
             answerCorrected = false;
             objectTriggeredEvents.hadTriggeredTarget = false;
             objectTriggeredEvents.hadTriggeredRightTarget = false;
-            generated = false;
-            roundHadFinished = true;
-            hadPassed = false;
-            roundCounter = roundCounter + 1;
+            generated = true;
+            roundHadFinished = false;
         }
     }
 
@@ -370,7 +345,7 @@ public class AnswerChoosing01 : MonoBehaviour
             visualPTempTimer_f = visualPromptTimer2_f;
             PrintVisualPrompts_f();
             startPrompts = true;
-            sessionIsTeaching = true;
+            sessionIsTesting = false;
         }
 
         // second visual prompt appear
@@ -379,6 +354,7 @@ public class AnswerChoosing01 : MonoBehaviour
             // play ring1 & ring2
             ringParticleInScene1.Play();
             ringParticleInScene2.Play();
+            deerAnimator.SetBool("isWalking", true);
             visualPTempTimer_f = visualPromptTimer2_f;
             PrintVisualPrompts_f();
             startPrompts = true;
@@ -388,9 +364,9 @@ public class AnswerChoosing01 : MonoBehaviour
         if (visualPTempTimer_f <= 0 && visualPromptCounter == 2 && !startPrompts && !answered)
         {
             // add animation + play ring1 & ring2
-            horseAnimator.SetBool("isWalking", true);
             ringParticleInScene1.Play();
             ringParticleInScene2.Play();
+            deerAnimator.SetBool("isWalking", true);
             visualPTempTimer_f = visualPromptTimer2_f;
             PrintVisualPrompts_f();
             startPrompts = true;
@@ -409,95 +385,98 @@ public class AnswerChoosing01 : MonoBehaviour
         // when the visual prompts end
         if (visualPTempTimer_d <= 0 && startPrompts && !answered)
         {
-            if (ringParticleInScene1 != null)
+            if(visualPromptCounter <= 1)
             {
-                ringParticleInScene1.Stop();
-            }
+                if (ringParticleInScene1 != null)
+                {
+                    ringParticleInScene1.Stop();
+                }
 
-            if (ringParticleInScene2 != null)
-            {
-                ringParticleInScene2.Stop();
-            }
+                if (ringParticleInScene2 != null)
+                {
+                    ringParticleInScene2.Stop();
+                }
 
-            if (horseAnimator != null)
-            {
-                horseAnimator.SetBool("isWalking", false);
-            }
+                if (deerAnimator != null)
+                {
+                    deerAnimator.SetBool("isWalking", false);
+                }
 
-            if(visualPromptCounter < 2)
-            {
                 if (visualPromptCounter == 0)
                 {
                     visualPTempTimer_d = visualPromptTimer1_d;
                     PrintVisualPrompts_d();
+
                 }
                 else if (visualPromptCounter == 1)
                 {
                     visualPTempTimer_d = visualPromptTimer2_d;
                     PrintVisualPrompts_d();
                 }
+
                 visualPromptCounter = visualPromptCounter + 1;
                 PrintVisualPrompts();
                 startTrail = false;
                 startPrompts = false;
             }
-            else if (voicePromptCounter == 2)
+            else if (visualPromptCounter == 2)
             {
-                if (roundCounter < 5)
+                if (count < 5)
                 {
-                    PlayAudioClip_3();
+                   PlayAudioClip_3();
                 }
 
-                if (roundCounter == 5)
+                if (count == 5)
                 {
-                    TakeSessionBreak();
+                    PlayAudioClip_9();
                 }
 
-                Destroy(target1InScene);
-                Destroy(ringInScene1);
-                Destroy(ringInScene2);
-                Destroy(ringInScene0);
-                Destroy(bubbleInScene);
-                horseAnimator.SetBool("isWalking", false);
-                OVRInput.SetControllerVibration(0, 0, controllerMask);
-            }
+                if (hadPlay3 || hadPlay9)
+                {
+                    Destroy(target1InScene);                   
+                    Destroy(target2InScene);
+                    Destroy(ringInScene1);
+                    Destroy(ringInScene2);
+                    Destroy(ringInScene0);
+                    Destroy(bubbleInScene);
+                    OVRInput.SetControllerVibration(0, 0, controllerMask);
 
-            if (hadPlay3 || hadPlay9)
-            {
-                voicePTempTimer = voicePTimer1;
+                    voicePTempTimer = voicePTimer1;
 
-                visualPTempTimer_f = visualPromptTimer1_f;
-                PrintVisualPrompts_f();
+                    visualPTempTimer_f = visualPromptTimer1_f;
+                    PrintVisualPrompts_f();
 
-                visualPTempTimer_d = visualPromptTimer1_d;
-                PrintVisualPrompts_d();
+                    visualPTempTimer_d = visualPromptTimer1_d;
+                    PrintVisualPrompts_d();
 
-                visualPromptCounter = 0;
-                PrintVisualPrompts();
+                    visualPromptCounter = 0;
+                    PrintVisualPrompts();
 
-                voicePromptCounter = 0;
-                PrintVoicePrompts();
+                    voicePromptCounter = 0;
+                    PrintVoicePrompts();
 
-                hadPlay1 = false;
-                hadPlay2 = false;
-                hadPlay3 = false;
-                hadPlay4 = false;
-                hadPlay5 = false;
-                hadPlay6 = false;
-                hadPlay7 = false;
-                hadPlay8 = false;
-                startRing1 = false;
-                startRing2 = false;
-                startRing0 = false;
-                startTrail = false;
-                startPrompts = false;
-                startBubbles = false;
-                answered = false;
-                answerCorrected = false;
-                objectTriggeredEvents.hadTriggeredTarget = false;
-                objectTriggeredEvents.hadTriggeredRightTarget = false;
-                generated = false;
-                roundHadFinished = true;
+                    hadPlay1 = false;
+                    hadPlay2 = false;
+                    hadPlay3 = false;
+                    hadPlay4 = false;
+                    hadPlay5 = false;
+                    hadPlay6 = false;
+                    hadPlay7 = false;
+                    hadPlay8 = false;
+                    hadPlay9 = false;
+                    startRing1 = false;
+                    startRing2 = false;
+                    startRing0 = false;
+                    startTrail = false;
+                    startPrompts = false;
+                    startBubbles = false;
+                    answered = false;
+                    answerCorrected = false;
+                    objectTriggeredEvents.hadTriggeredTarget = false;
+                    objectTriggeredEvents.hadTriggeredRightTarget = false;
+                    generated = false;
+                    roundHadFinished = true;
+                }  
             }
         }
     }
@@ -520,28 +499,69 @@ public class AnswerChoosing01 : MonoBehaviour
         }
     }
 
+    // 2. answer is right
     private void AnswerIsRight()
     {
         PlayAudioClip_2();
+        PlayAudioClip_8();
+        GenerateBubbles();
+
+        if (ringInScene1 != null || ringInScene2 != null)
+        {
+            ringParticleInScene1.Stop();
+            ringParticleInScene2.Stop();
+        }
+
+        GenerateRingObject0();
+
+        if (deerAnimator != null)
+        {
+            deerAnimator.SetBool("isWalking", true);
+        }
+
+        if (startTrail)
+        {
+            startTrail = false;
+        }
+
         if (_timer2 <= 0 && hadPlay2)
         {
-            if (roundCounter < 5)
+            if (count < 5)
             {
                 PlayAudioClip_3();
-            } else if (roundCounter == 5)
+            }
+
+            if (count == 5)
             {
-                TakeSessionBreak();
+                PlayAudioClip_9();
             }
 
             Destroy(target1InScene);
             Destroy(target2InScene);
+            Destroy(ringInScene1);
+            Destroy(ringInScene2);
+            Destroy(ringInScene0);
+            Destroy(bubbleInScene);
+            deerAnimator.SetBool("isWalking", false);
+            OVRInput.SetControllerVibration(0, 0, controllerMask);
             _timer2 = timer2;
         }
 
-        if (hadPlay3)
+        if (hadPlay3 || hadPlay9)
         {
-            _intervalTimer = intervalTimer;
-            _timer2 = timer2;
+            voicePTempTimer = voicePTimer1;
+
+            visualPTempTimer_f = visualPromptTimer1_f;
+            PrintVisualPrompts_f();
+
+            visualPTempTimer_d = visualPromptTimer1_d;
+            PrintVisualPrompts_d();
+
+            visualPromptCounter = 0;
+            PrintVisualPrompts();
+
+            voicePromptCounter = 0;
+            PrintVoicePrompts();
 
             hadPlay1 = false;
             hadPlay2 = false;
@@ -551,53 +571,66 @@ public class AnswerChoosing01 : MonoBehaviour
             hadPlay6 = false;
             hadPlay7 = false;
             hadPlay8 = false;
+            hadPlay9 = false;
+            startRing1 = false;
+            startRing2 = false;
+            startRing0 = false;
+            startTrail = false;
+            startPrompts = false;
+            startBubbles = false;
             answered = false;
             answerCorrected = false;
             objectTriggeredEvents.hadTriggeredTarget = false;
             objectTriggeredEvents.hadTriggeredRightTarget = false;
             generated = false;
             roundHadFinished = true;
-            hadPassed = false;
-            roundCounter = roundCounter + 1;
         }
     }
 
+    // 3. answer is wrong
     private void AnswerIsWrong()
     {
         PlayAudioClip_5();
-
-        if (hadPlay5)
+        if (_timer3 <= 0 && hadPlay5)
         {
-            hadPlay3 = false;
-            hadPlay4 = false;
-            hadPlay5 = false;
-            hadPlay7 = false;
-            answered = false;
-            answerCorrected = false;
-            objectTriggeredEvents.hadTriggeredTarget = false;
-            objectTriggeredEvents.hadTriggeredRightTarget = false;
-            generated = true;
-            roundHadFinished = false;
-        }
-
-        if (hadPlay5 && !audioSource_voice.isPlaying)
-        {
-            if (roundCounter < 5)
+            if (count < 5)
             {
                 PlayAudioClip_3();
             }
-            else if (roundCounter == 5)
+
+            if (count == 5)
             {
-                TakeSessionBreak();
+                PlayAudioClip_9();
             }
+
             Destroy(target1InScene);
             Destroy(target2InScene);
+            Destroy(ringInScene1);
+            Destroy(ringInScene2);
+            Destroy(ringInScene0);
+            Destroy(bubbleInScene);
+            deerAnimator.SetBool("isWalking", false);
+            OVRInput.SetControllerVibration(0, 0, controllerMask);
+            _timer3 = timer3;
+            timer3_t.text = _timer3.ToString("F1");
         }
 
-        if (hadPlay3)
+        if (hadPlay3 || hadPlay9)
         {
-            _intervalTimer = intervalTimer;
-            _timer2 = timer2;
+            voicePTempTimer = voicePTimer1;
+
+            visualPTempTimer_f = visualPromptTimer1_f;
+            PrintVisualPrompts_f();
+
+            visualPTempTimer_d = visualPromptTimer1_d;
+            PrintVisualPrompts_d();
+
+            visualPromptCounter = 0;
+            PrintVisualPrompts();
+
+            voicePromptCounter = 0;
+            PrintVoicePrompts();
+
             hadPlay1 = false;
             hadPlay2 = false;
             hadPlay3 = false;
@@ -606,51 +639,23 @@ public class AnswerChoosing01 : MonoBehaviour
             hadPlay6 = false;
             hadPlay7 = false;
             hadPlay8 = false;
+            hadPlay9 = false;
+            startRing1 = false;
+            startRing2 = false;
+            startRing0 = false;
+            startTrail = false;
+            startPrompts = false;
+            startBubbles = false;
             answered = false;
             answerCorrected = false;
             objectTriggeredEvents.hadTriggeredTarget = false;
             objectTriggeredEvents.hadTriggeredRightTarget = false;
             generated = false;
             roundHadFinished = true;
-            hadPassed = false;
-            roundCounter = roundCounter + 1;
         }
     }
 
-    private void EndLevel()
-    {
-            if (hadPassed)
-            {
-                PlayAudioClip_8();
-            }
-            else if (!hadPassed)
-            {
-                PlayAudioClip_6();
-            }
-
-        if(hadPlay6 || hadPlay8)
-        {
-            _intervalTimer = intervalTimer;
-            _timer2 = timer2;
-            hadPlay1 = false;
-            hadPlay2 = false;
-            hadPlay3 = false;
-            hadPlay4 = false;
-            hadPlay5 = false;
-            hadPlay6 = false;
-            hadPlay7 = false;
-            hadPlay8 = false;
-            answered = false;
-            answerCorrected = false;
-            objectTriggeredEvents.hadTriggeredTarget = false;
-            objectTriggeredEvents.hadTriggeredRightTarget = false;
-            generated = false;
-            hadPassed = false;
-            roundHadFinished = true;
-            roundCounter = roundCounter + 1;
-        }
-    }
-
+    /* generate objects */
     // generate targets
     private void GenerateTargets()
     {
@@ -658,19 +663,20 @@ public class AnswerChoosing01 : MonoBehaviour
 
         if (positions == 1)
         {
-            target1InScene = Instantiate(prefabTarget1, target1_p.position, Quaternion.AngleAxis(130, Vector3.up));
-            target2InScene = Instantiate(prefabTarget2, target2_p.position, Quaternion.AngleAxis(230, Vector3.up));
+            target1InScene = Instantiate(prefabTarget1, target1_p.position, Quaternion.AngleAxis(230, Vector3.up));
+            target2InScene = Instantiate(prefabTarget2, target2_p.position, Quaternion.AngleAxis(130, Vector3.up));
             rightAnswerTransformForRings = GameObject.FindGameObjectWithTag("rightAnswerPosition_rings").transform;
         }
         else if (positions == 2)
         {
-            target1InScene = Instantiate(prefabTarget1, target2_p.position, Quaternion.AngleAxis(230, Vector3.up));
-            target2InScene = Instantiate(prefabTarget2, target1_p.position, Quaternion.AngleAxis(130, Vector3.up));
+            target1InScene = Instantiate(prefabTarget1, target2_p.position, Quaternion.AngleAxis(130, Vector3.up));
+            target2InScene = Instantiate(prefabTarget2, target1_p.position, Quaternion.AngleAxis(230, Vector3.up));
             rightAnswerTransformForRings = GameObject.FindGameObjectWithTag("rightAnswerPosition_rings").transform;
         }
 
-        horseAnimator = target1InScene.GetComponent<Animator>();
+        deerAnimator = target1InScene.GetComponent<Animator>();
     }
+
     // generate trails
     private void GenerateTrailObject()
     {
@@ -726,14 +732,15 @@ public class AnswerChoosing01 : MonoBehaviour
         }
     }
 
-    // setup timers
+    /* setup timers */
     // timer before "Welcome-clip"
     private void welcomeTimer()
     {
         if (hadPlay0)
         {
             _timer1 = timer1;
-        } else
+        }
+        else
         {
             _timer1 -= Time.deltaTime;
         }
@@ -759,7 +766,16 @@ public class AnswerChoosing01 : MonoBehaviour
             _timer2 -= Time.deltaTime;
         }
     }
-
+    
+    private void wrongAnswerTimer()
+    {
+        if (!answerCorrected && answered && !audioSource_voice.isPlaying)
+        {
+            _timer3 -= Time.deltaTime;
+            timer3_t.text = _timer3.ToString("F1");
+        }
+    }
+    
     /* printing data */
     private void PrintVoicePrompts()
     {
@@ -769,6 +785,11 @@ public class AnswerChoosing01 : MonoBehaviour
     private void PrintVisualPrompts()
     {
         visualPCounter_t.text = visualPromptCounter.ToString();
+    }
+
+    private void PrintRounds()
+    {
+        roundCounter_t.text = count.ToString();
     }
 
     private void PrintVisualPrompts_f()
@@ -783,7 +804,7 @@ public class AnswerChoosing01 : MonoBehaviour
         visualPTimer_d.text = visualPTempTimer_d.ToString("F1");
     }
 
-    // play AudioClips
+    /* play AudioClips */
     private void PlayAudioClip_0()
     {
         if (!hadPlay0 && !hadStarted && !answered)
@@ -806,6 +827,8 @@ public class AnswerChoosing01 : MonoBehaviour
         if (!hadPlay1 && !hadStarted && !answered)
         {
             audioSource_voice.PlayOneShot(audioClip_1);
+            count = count + 1;
+            PrintRounds();
             hadStarted = true;
             hadFinished = false;
             hadPlay1 = true;
@@ -819,22 +842,13 @@ public class AnswerChoosing01 : MonoBehaviour
 
     private void PlayAudioClip_2()
     {
-        if (!objectTriggeredEvents.audioSource_click.isPlaying && !hadPlay2 && !hadStarted && answered)
+        if (!objectTriggeredEvents.audioSource_click.isPlaying && !hadPlay2 && !hadStarted)
         {
             //Debug.Log("Start playing Clip_2!");
             audioSource_voice.PlayOneShot(audioClip_2);
-            if (roundCounter <= 5)
-            {
-                countRightAnswer1 = countRightAnswer1 + 1;
-            } else if (roundCounter > 5)
-            {
-                countRightAnswer2 = countRightAnswer2 + 1;
-            }
-            
             hadStarted = true;
             hadFinished = false;
             hadPlay2 = true;
-
         }
         else if (!audioSource_voice.isPlaying)
         {
@@ -879,7 +893,7 @@ public class AnswerChoosing01 : MonoBehaviour
 
     private void PlayAudioClip_5()
     {
-        if (!objectTriggeredEvents.audioSource_click.isPlaying && !hadPlay5 && !hadStarted && answered == true)
+        if (!objectTriggeredEvents.audioSource_click.isPlaying && !hadPlay5 && !hadStarted && answered)
         {
             //Debug.Log("Start playing Clip_5!");
             audioSource_voice.PlayOneShot(audioClip_5);
@@ -889,16 +903,16 @@ public class AnswerChoosing01 : MonoBehaviour
         }
         else if (!audioSource_voice.isPlaying)
         {
-            hadFinished = true;
+            hadFinished = false;
             hadStarted = false;
         }
     }
 
     private void PlayAudioClip_6()
     {
-        if (!hadPlay6 && !hadStarted)
+        if (!objectTriggeredEvents.audioSource_click.isPlaying && !hadPlay6 && !hadStarted && answered)
         {
-            //Debug.Log("Start playing Clip_6!");
+            //Debug.Log("Start playing Clip_5!");
             audioSource_voice.PlayOneShot(audioClip_6);
             hadStarted = true;
             hadFinished = false;
@@ -930,9 +944,9 @@ public class AnswerChoosing01 : MonoBehaviour
 
     private void PlayAudioClip_8()
     {
-        if (!hadPlay8 && !hadStarted && answered)
+        if (!objectTriggeredEvents.audioSource_click.isPlaying && !hadPlay8 && !hadStarted)
         {
-            //Debug.Log("Start playing Clip_6!");
+            //Debug.Log("Start playing Clip_7!");
             audioSource_voice.PlayOneShot(audioClip_8);
             hadStarted = true;
             hadFinished = false;
@@ -940,27 +954,28 @@ public class AnswerChoosing01 : MonoBehaviour
         }
         else if (!audioSource_voice.isPlaying)
         {
-            hadFinished = true;
+            hadFinished = false;
             hadStarted = false;
         }
     }
 
-    private void TakeSessionBreak()
+    private void PlayAudioClip_9()
     {
-        if (!hadPlay9 && !hadStarted && !sessionFinished)
+        if (!audioSource_voice.isPlaying && !hadPlay9 && !hadStarted)
         {
-            //Debug.Log("Start playing Clip_6!");
+            //Debug.Log("Start playing Clip_7!");
             audioSource_voice.PlayOneShot(audioClip_9);
+            count = 0;
+            PrintRounds();
             hadStarted = true;
             hadFinished = false;
-            sessionFinished = true;
             hadPlay9 = true;
+            sessionIsTesting = true;
         }
         else if (!audioSource_voice.isPlaying)
         {
-            hadFinished = true;
-            hadStarted = false;
-            sessionFinished = false;
+            hadFinished = false;
+            hadStarted = false; 
         }
     }
 }
