@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3049907820743853289}
   - component: {fileID: 1507419314512038501}
-  - component: {fileID: -954844945542215321}
   - component: {fileID: 3612604463928008903}
+  - component: {fileID: 2747344258232680905}
   m_Layer: 0
   m_Name: ReticuleOpen
   m_TagString: Untagged
@@ -83,20 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-954844945542215321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6217196472274857551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df948c9b315fa2c47b5e96cc7bed699a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  answerChoosingTutorial: {fileID: 0}
-  speed: 5
 --- !u!96 &3612604463928008903
 TrailRenderer:
   serializedVersion: 2
@@ -203,3 +189,16 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &2747344258232680905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6217196472274857551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dfcfb21eb89c0c4d88ea0267d103146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5

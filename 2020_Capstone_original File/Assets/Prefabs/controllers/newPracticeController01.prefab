@@ -47,7 +47,7 @@ MonoBehaviour:
   objectTriggeredEvents: {fileID: 0}
   prefabTarget1: {fileID: 3289918265409252055, guid: 9a6341d6d6318cb48be562fc796c3b30,
     type: 3}
-  prefabTarget2: {fileID: 2027994633171206986, guid: c778a32e8f1d1544cb5d848c2744c80d,
+  prefabTarget2: {fileID: 6883276950937870456, guid: 07e670735081ebb48930b3077e6249c2,
     type: 3}
   target1_p: {fileID: 0}
   target2_p: {fileID: 0}
@@ -67,25 +67,27 @@ MonoBehaviour:
   visualPTimer_d: {fileID: 0}
   boolOfTesting_t: {fileID: 0}
   boolOfTeaching_t: {fileID: 0}
-  timer3_t: {fileID: 0}
+  testingScores1_t: {fileID: 0}
+  testingScores2_t: {fileID: 0}
+  teachingScore_t: {fileID: 0}
   audioSource_voice: {fileID: 8056654983289807475}
   audioClip_0: {fileID: 8300000, guid: 6143e02aa91c780438a433a27a5df849, type: 3}
   audioClip_1: {fileID: 8300000, guid: b0bc5ad94d9c2bc4cadde04981f82e14, type: 3}
   audioClip_2: {fileID: 8300000, guid: e3ac9e699d6d6e34b86dd6842b2a0b19, type: 3}
   audioClip_3: {fileID: 8300000, guid: 68375d100305d6d4ea639dc785e6ce70, type: 3}
-  audioClip_4: {fileID: 8300000, guid: 02988954a4121c54d8f56819dd9ee6d8, type: 3}
-  audioClip_5: {fileID: 8300000, guid: 25e6629a5360d14449bbe8f1b31859bd, type: 3}
+  audioClip_5: {fileID: 8300000, guid: e8ff2a1469687af47b7cc575fe566b49, type: 3}
   audioClip_6: {fileID: 8300000, guid: b0080dbbf46523d4a907d2dd738e56ea, type: 3}
   audioClip_7: {fileID: 8300000, guid: d0e123b312a6dce489a596ac693071ac, type: 3}
   audioClip_8: {fileID: 8300000, guid: d1eb0a4b6d984834991c02d11283d157, type: 3}
-  audioClip_9: {fileID: 8300000, guid: 4b25eaec843cf5942830ec733fbbffc5, type: 3}
+  audioClip_9: {fileID: 8300000, guid: 47098b6800fab0549bf62ce5aa43c0d5, type: 3}
+  audioClip_19: {fileID: 8300000, guid: 0d9213a25c088c64f816d952463822ea, type: 3}
+  audioClip_10: {fileID: 8300000, guid: 9f4fd994e3c0ca2409b028a318e25378, type: 3}
   timer1: 1
   intervalTimer: 1
   timer2: 1
-  timer3: 1
   timer4: 0
-  voicePTimer1: 4
-  voicePTimer2: 2
+  voicePTimer1: 3.5
+  voicePTimer2: 1.5
   visualPromptTimer1_f: 6.8
   visualPromptTimer2_f: 2.5
   visualPromptTimer1_d: 3

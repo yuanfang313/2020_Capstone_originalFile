@@ -8,10 +8,19 @@ TagManager:
   - level1
   - level2
   - backToMainMenu
-  - target
   - rightAnswer
-  - rightAnswerPosition
+  - rightAnswerPosition_1
+  - rightAnswerPosition_2
+  - rightAnswerPosition_rings_1
+  - rightAnswerPosition_rings_2
+  - rightAnswer_1
+  - rightAnswer_2
+  - level3
   - rightAnswerPosition_rings
+  - rightAnswerPosition
+  - distractor
+  - target
+  - trailObject
   layers:
   - Default
   - TransparentFX

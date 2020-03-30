@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6543450343800451940}
-  - component: {fileID: 1919809833163196485}
+  - component: {fileID: 288393047965363162}
   m_Layer: 0
   m_Name: TriggeringEventsController
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1919809833163196485
+--- !u!114 &288393047965363162
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,4 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73d8fdd56516e3349967c52df8aa5166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource_click: {fileID: 0}
+  answerChoosing_Level3: {fileID: 8332541847643842559, guid: 6d72ba1435af6b54cb425bb2bd0e863c,
+    type: 3}
+  audioSource_click: {fileID: 222490548148218070, guid: e918c2d5b038eae48afcf8e765c901bd,
+    type: 3}
+  hadTriggeredTarget: 0
+  hadTriggeredRightTarget: 0

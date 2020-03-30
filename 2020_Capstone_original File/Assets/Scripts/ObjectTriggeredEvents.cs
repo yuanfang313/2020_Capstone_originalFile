@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ObjectTriggeredEvents : MonoBehaviour
 {
+    public AnswerChoosing_level3 answerChoosing_Level3;
     public AudioSource audioSource_click;
     public bool hadTriggeredTarget = false;
     public bool hadTriggeredRightTarget = false;
-   
+
     private string tagOfHittedObject = null;
     private OVRInput.Controller currentController;
     private bool triggerDown = false;
@@ -50,10 +51,6 @@ public class ObjectTriggeredEvents : MonoBehaviour
         {
             SceneManager.LoadScene("Main Menu");
         } 
-
-
-
-
         Timer();
     }
 
@@ -80,7 +77,7 @@ public class ObjectTriggeredEvents : MonoBehaviour
     {
         tagOfHittedObject = hitObject.tag;
 
-        if (hitObject && triggerDown && hitObject.tag != "target" && hitObject.tag != "rightAnswer")
+        if (hitObject && triggerDown && hitObject.tag != "distractor" && hitObject.tag != "rightAnswer" && hitObject.tag != "rightAnswer_1" && hitObject.tag != "rightAnswer_2")
         {
             startTimer = true;
         }
@@ -100,6 +97,11 @@ public class ObjectTriggeredEvents : MonoBehaviour
             SceneManager.LoadScene("Level2");
             startLoadScene = false;
         }
+        else if (tagOfHittedObject == "level3" && startLoadScene)
+        {
+            SceneManager.LoadScene("Level3");
+            startLoadScene = false;
+        }
         else if (tagOfHittedObject == "backToMainMenu" && startLoadScene)
         {
             SceneManager.LoadScene("Main Menu");
@@ -114,22 +116,51 @@ public class ObjectTriggeredEvents : MonoBehaviour
             audioSource_click.Play();
             OVRInput.SetControllerVibration(0.1f, 0.1f, currentController);
             hadPlay = true;
-            if(hitObject.tag == "rightAnswer")
-            {
-                hadTriggeredTarget = true;
-                hadTriggeredRightTarget = true;
-            }
 
-            if (hitObject.tag == "target")
+            if (answerChoosing_Level3.level3HadLoad)
             {
-                hadTriggeredTarget = true;
-                hadTriggeredRightTarget = false;
+                if (answerChoosing_Level3.answerIsTarget1 && !answerChoosing_Level3.answerIsTarget2)
+                {
+                    if (hitObject.tag == "rightAnswer_1")
+                        thisIsRightAnswer();
+
+                    if (hitObject.tag == "rightAnswer_2")
+                        thisIsWrongAnswer();
+                }
+                else if (!answerChoosing_Level3.answerIsTarget1 && answerChoosing_Level3.answerIsTarget2)
+                {
+                    if (hitObject.tag == "rightAnswer_2")
+                        thisIsRightAnswer();
+
+                    if (hitObject.tag == "rightAnswer_1")
+                        thisIsWrongAnswer();
+                }
             }
+            else
+            {
+                if (hitObject.tag == "rightAnswer")
+                    thisIsRightAnswer();
+
+                if (hitObject.tag == "distractor")
+                    thisIsWrongAnswer();
+            }      
         }
         else if(!triggerDown)
         {
             hadPlay = false;
             OVRInput.SetControllerVibration(0f, 0f, currentController);
         }
+    }
+
+    private void thisIsRightAnswer()
+    {
+        hadTriggeredTarget = true;
+        hadTriggeredRightTarget = true;
+    }
+
+    private void thisIsWrongAnswer()
+    {
+        hadTriggeredTarget = true;
+        hadTriggeredRightTarget = false;
     }
 }
